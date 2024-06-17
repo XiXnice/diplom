@@ -1,0 +1,7 @@
+django
+djangorestframework
+celery
+requests
+django-rest-passwordreset
+psycopg2-binary
+redis

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "/styles/auto_reg_header.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/registration.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/text.css" %}">
+    <title>Engineer's database</title>
+</head>
+<body>
+    <header>
+        <div class="con_menu_text">
+            <a class="con_logo_img_text" href="{% url 'index' %}">
+                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
+                <div class="con_logo_text">
+                    <span class="bold-16">
+                        Engineer's database
+                    </span>
+                    <span class="bold-16 logo_text_2">
+                        Ваш помощник в работе
+                    </span>
+                </div>
+            </a>
+            <div class="con_menu">
+                <a href="" class="menu_a bold-16">
+                    База знаний
+                </a>
+                <a href="" class="menu_a bold-16">
+                    Форум
+                </a>
+                <a href="" class="menu_a bold-16">
+                    Шаблоны
+                </a>
+
+            </div>
+        </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn bold-16">Меню</button>
+            <div id="myDropdown" class="dropdown-content">
+                {% if request.session.user_token %}
+                    <a href="">Профиль</a>
+                    <a href="{% url 'user-logout' %}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'user-registration-confirm' %}">Подтвердить потчу</a>
+                    <a href="{% url 'user-registration' %}">Зарегистрироваться</a>
+                    <a href="{% url 'user-login' %}">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="con_form">
+            <span class="bold-24 hel text_white">
+                Заполните форму!
+            </span>
+            <form method="POST" class="form" action ="{% url 'user-registration' %}">
+                {% csrf_token %}
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите фамилию" name="last_name" required>
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите имя" name="first_name" required>
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите отчество" name="patronymic">
+                <input class="in bold-16" placeholder="Введите email" type="email" name="email" pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$" required>
+                <input class="in bold-16" placeholder="Введите пароль" type="password" name="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-label="Пароль должен содержать строчнуюи и заглавную букву состоять не менее чем из 8 символ и включать цифру" required>
+                <input class="in bold-16" placeholder="Повторите пароль" type="password" name="password2" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-label="Пароль должен содержать строчнуюи и заглавную букву состоять не менее чем из 8 символ и включать цифру" required>
+                <a class="bold-20 text_white" href="{% url 'user-login' %}">Авторизоваться</a>
+                {% if Errors %}
+                    <span class="text_red bold-16">
+                        {% if Errors.email %}
+                            {%for x in Errors.email %}
+                                {{ x }}
+                            {% endfor %}
+                        {% else %}
+                            {{ Errors }}
+                        {% endif %}
+                    </span>
+                {% endif %}
+                <button class="btn bold-16">Зарегистрироваться</button>
+            </form>
+        </div>
+    </main>
+    <script src="{% static "/js/menu.js" %}"></script>
+</body>
+</html>

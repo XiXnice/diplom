@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "/styles/knowledge_base_article_header.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/knowledge_base_article.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/text.css" %}">
+    <title>Engineer's database</title>
+</head>
+<body>
+    <header>
+        <div class="con_menu_text">
+            <a class="con_logo_img_text" href="">
+                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
+                <div class="con_logo_text">
+                    <span class="bold-16">
+                        Engineer's database
+                    </span>
+                    <span class="bold-16 logo_text_2">
+                        Ваш помощник в работе
+                    </span>
+                </div>
+            </a>
+            <div class="con_menu">
+                <a href="{% url 'knowledgebase' %}" class="menu_a bold-16">
+                    База знаний
+                </a>
+                <a href="{% url 'forum' %}" class="menu_a bold-16">
+                    Форум
+                </a>
+                <a href="" class="menu_a bold-16">
+                    Шаблоны
+                </a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn bold-16">Меню</button>
+            <div id="myDropdown" class="dropdown-content">
+                {% if request.session.user_token %}
+                    <a href="">Профиль</a>
+                    <a href="{% url 'user-logout' %}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'user-registration-confirm' %}">Подтвердить потчу</a>
+                    <a href="{% url 'user-registration' %}">Зарегестрироваться</a>
+                    <a href="{% url 'user-login' %}">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="con_theme">
+            <span class="zag bold-20">
+                {{data.theme}}
+            </span>
+            <span class="regular-16">
+                {{data.theme}}
+            </span>
+        </div>
+    </main>
+    <script src="{% static "/js/menu.js" %}"></script>
+</body>
+</html>

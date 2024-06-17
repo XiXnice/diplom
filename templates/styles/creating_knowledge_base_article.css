@@ -1,0 +1,118 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    background-image: url('../images/leone-venter-VieM9BdZKFo-unsplash.jpg');    
+    background-size: 1920px 1400px;
+    background-repeat: no-repeat;
+}
+
+main{
+    padding: 50px 0px;
+    min-height: 769px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.con_div{
+    width: 750px;
+    padding: 25px;
+    border-radius: 50px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.img_svg{
+    width: 50px;
+    height: 50px;
+}
+
+.con_left_rigt{
+    display: flex;
+    padding: 50px 145px 100px 145px;
+}
+
+.con_text_1{
+    background-color: #35939F;
+}
+
+.con_text_2{
+    background-color: #2B7B84;
+}
+
+.con_text_3{
+    background-color: #42A2B0;
+}
+
+.con_text_4{
+    background-color: #3CA5B0;
+}
+
+.text_div{
+    color: white;
+}
+
+.con_left{
+    display: flex;
+    flex-direction: column;
+    gap: 220px;
+}
+
+.con_right{
+    padding-top: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 220px;
+}
+
+.text_down{
+    color: white;
+}
+
+.con_down{
+    background-color: #185B61;
+    padding: 15px 20px; 
+    width: 1260px;
+}
+
+.con_theme{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 1200px;
+}
+
+.in_text{
+    min-height: auto;
+    padding: 30px;
+    resize: none;
+    border-radius: 20px;
+    background-color: #DDF3FF;
+}
+
+.in_text2{
+    min-height: auto;
+    padding: 30px;
+    resize: none;
+    border-radius: 20px;
+    height: 500px;
+    background-color: #DDF3FF;
+}
+
+.form_theme{
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.but{
+    padding: 15px 30px;
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.but:focus{
+    background-color: #DDF3FF;
+}

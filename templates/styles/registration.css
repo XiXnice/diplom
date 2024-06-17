@@ -1,0 +1,49 @@
+body{
+    padding: 0px;
+    margin: 0px;
+}
+main{
+    background-image: url('../images/dan-meyers-vouoK_daWL8-unsplash.jpg');
+    background-size: 1920px 1080px;
+    background-repeat: no-repeat;
+}
+.con_form{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 100px 700px 150px 700px;
+    align-items: center;
+}
+
+.text_white{
+    color: white;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.in{
+    width: 450px;
+    padding: 15px 25px;
+    border: 1px solid black;
+}
+
+.btn{
+    margin: 10px 0px;
+    padding: 15px 100px;
+    background-color: #5FF5E3;
+    border-radius: 50px;
+    border: none;
+}
+
+.btn:focus{
+    border: 2px solid black;
+}
+
+.text_red{
+    color: red;
+}

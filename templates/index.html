@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "/styles/index.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/text.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/index_header.css" %}">
+    <title>Engineer's database</title>
+</head>
+<body>
+    <header>
+        <div class="con_menu_text">
+            <a class="con_logo_img_text" href="{% url 'index' %}">
+                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
+                <div class="con_logo_text">
+                    <span class="bold-16">
+                        Engineer's database
+                    </span>
+                    <span class="bold-16 logo_text_2">
+                        Ваш помощник в работе
+                    </span>
+                </div>
+            </a>
+            <div class="con_menu">
+                <a href="{% url 'knowledgebase' %}" class="menu_a bold-16">
+                    База знаний
+                </a>
+                <a href="{% url 'forum' %}" class="menu_a bold-16">
+                    Форум
+                </a>
+                <a href="" class="menu_a bold-16">
+                    Шаблоны
+                </a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn bold-16">Меню</button>
+            <div id="myDropdown" class="dropdown-content">
+                {% if request.session.user_token %}
+                    <a href="">Профиль</a>
+                    <a href="{% url 'user-logout' %}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'user-registration-confirm' %}">Подтвердить потчу</a>
+                    <a href="{% url 'user-registration' %}">Зарегестрироваться</a>
+                    <a href="{% url 'user-login' %}">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="con_left_rigt">
+            <div class="con_left">
+                <div class="con_text_1 con_div">
+                    <span class="text_1 text_div bold-20">
+                        Добро пожаловать на главную страницу нашего сайта, где мы, как пионеры в области информационных систем, предлагаем вам ключ к эффективности и совершенству в проектировании электрических сетей.
+                    </span>
+                </div>
+                <div class="con_div con_text_3">
+                    <span class="text_3 text_div bold-20">
+                        Мы — ваш надежный партнёр в создании интеллектуальных решений. Наша миссия — обеспечить вас инструментами, которые помогут вам сокращать временные рамки и улучшать качество вашей работы.
+                    </span>
+                    <img class="img_svg" src="{% static "/svg/Vector_2.svg" %}" alt="Engineer's database">
+                </div>
+            </div>
+            <div class="con_right"> 
+                <div class="con_div con_text_2">
+                    <img class="img_svg" src="{% static "/svg/Vector_1.svg" %}" alt="Engineer's database">
+                    <span class="text_2 text_div bold-20">
+                        Это не просто технологический шаг вперёд, это революция в вашем подходе к проектированию. Мы предлагаем вам не просто инструменты, но и вдохновение.
+                    </span>
+                </div>
+                <div class="con_div con_text_4">
+                    <img class="img_svg" src="{% static "/svg/Vecto_3.svg" %}" alt="Engineer's database">
+                    <span class="text_4 text_div bold-20">
+                        Наши решения — компания специализируется на проектировании электрических сетей, и поэтому наш модуль информационной системы разработан с учётом нюансов этого процесса.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="con_down">
+            <span class="text_down bold-20">
+                Присоединяйтесь к нам сегодня и откройте для себя новую эру в проектировании электрических сетей. Давайте вместе создадим будущее, где технологии работают на благо вашего бизнеса и позволяют вам достигать новых высот эффективности и инноваций!
+            </span>
+        </div>
+    </main>
+    <script src="{% static "/js/menu.js" %}"></script>
+</body>
+</html> 

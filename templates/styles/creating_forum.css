@@ -1,0 +1,124 @@
+body{
+    padding: 0px;
+    margin: 0px;    
+}
+
+main{
+    background-image: url('../images/adrian-infernus-GLf7bAwCdYg-unsplash.jpg');
+    min-height: 760px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 50px 0px;
+    background-size: 1920px 1080px;
+    background-repeat: no-repeat;
+}
+
+.con_div{
+    width: 750px;
+    padding: 25px;
+    border-radius: 50px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.img_svg{
+    width: 50px;
+    height: 50px;
+}
+
+.con_left_rigt{
+    display: flex;
+    padding: 50px 145px 100px 145px;
+}
+
+.con_text_1{
+    background-color: #35939F;
+}
+
+.con_text_2{
+    background-color: #2B7B84;
+}
+
+.con_text_3{
+    background-color: #42A2B0;
+}
+
+.con_text_4{
+    background-color: #3CA5B0;
+}
+
+.text_div{
+    color: white;
+}
+
+.con_left{
+    display: flex;
+    flex-direction: column;
+    gap: 220px;
+}
+
+.con_right{
+    padding-top: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 220px;
+}
+
+.text_down{
+    color: white;
+}
+
+.con_down{
+    background-color: #185B61;
+    padding: 15px 20px; 
+    width: 1260px;
+}
+
+.theme{
+    width: 1140px;
+    padding: 15px 30px;
+    background-color: white ;
+    border-radius: 20px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.go_to{
+    color: black;
+    padding: 15px 30px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white
+}   
+
+.go_to:hover, .go_to:focus {
+    background-color: #5cbaf8;
+}
+
+.con_theme{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: white;
+    padding: 50px;
+    border: 1px solid black;
+    align-items: flex-end;
+}
+
+.con_main{
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.in_to{
+    width: 1140px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 15px 30px;
+    background-color: #DDF3FF;
+}
