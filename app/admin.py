@@ -35,17 +35,17 @@ class ForumAdmin(admin.ModelAdmin):
 
 @admin.register(Patterns)
 class PatternsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('theme', 'path_file', 'date_time_creation', 'user_id')
 
 
 @admin.register(MessageForum)
 class MessageForumAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('text', 'date_time_creation', 'user_id', 'forum_id')
 
 
 @admin.register(MessagePatterns)
 class MessagePatternsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('text', 'date_time_creation', 'user_id', 'patterns_id')
 
 
 @admin.register(ConfirmEmailToken)

@@ -1,0 +1,79 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    background-image: url('../images/sean-pollock-PhYq704ffdA-unsplash.jpg');
+    min-height: 760px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0px;
+    background-size: 1920px 1080px;
+    background-repeat: no-repeat;
+}
+
+.con_main{
+    display: flex;
+    gap: 100px;
+}
+
+.con_form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dis{
+    overflow-y:auto;
+    display: flex;
+    flex-direction: row;
+    width: 1030px;
+    flex-wrap: wrap;
+    gap: 30px
+}
+
+.link_a{
+    background-color: white;
+    width: 470px;
+    padding: 10px;
+    border-radius: 3px;
+    color: black;
+}
+
+.my_a{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.col_white{
+    color: rgb(255, 255, 255);
+}
+
+.col_black{
+    color: black;
+}
+
+.in{
+    padding: 15px 20px;
+    width: 460px;
+    background-color: white;
+    border: 0px;
+}
+
+.but{
+    padding: 15px 50px;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+.but:hover{
+ background-color: rgb(147, 201, 245);
+}

@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/creating_forum.css">
-    <link rel="stylesheet" href="/styles/creating_forum_header.css">
-    <link rel="stylesheet" href="/styles/text.css">
+    <link rel="stylesheet" href="{% static "/styles/creating_forum.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/creating_forum_header.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/text.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/footer.css" %}">
     <title>Engineer's database</title>
 </head>
 <body>
     <header>
         <div class="con_menu_text">
             <a class="con_logo_img_text" href="{% url 'index' %}">
-                <img src="/svg/Vector_logo.svg" alt="Engineer's database">
+                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
                 <div class="con_logo_text">
                     <span class="bold-16">
                         Engineer's database
@@ -30,7 +31,7 @@
                 <a href="{% url 'forum' %}" class="menu_a bold-16">
                     Форум
                 </a>
-                <a href="" class="menu_a bold-16">
+                <a href="{% url 'pattern' %}" class="menu_a bold-16">
                     Шаблоны
                 </a>
             </div>
@@ -39,7 +40,7 @@
             <button onclick="myFunction()" class="dropbtn bold-16">Меню</button>
             <div id="myDropdown" class="dropdown-content">
                 {% if request.session.user_token %}
-                    <a href="">Профиль</a>
+                    <a href="{% url 'profile-page' request.session.user_id %}">Профиль</a>
                     <a href="{% url 'user-logout' %}">Выйти</a>
                 {% else %}
                     <a href="{% url 'user-registration-confirm' %}">Подтвердить потчу</a>
@@ -51,14 +52,27 @@
     </header>
     <main>
         <div class="con_main">
-            <form class="con_theme" method="POST">
-                <input class="in_to bold-20" type="text" placeholder="Введите ваш вопрос или тему">
+            <form class="con_theme" method="POST" action="{% url 'forum-create' %}">
+                <input class="in_to regular-20" type="text" placeholder="Введите ваш вопрос или тему" name="theme">
                 <button class="go_to bold-16">
-                    Создать запрос
+                    Создать
                 </button> 
             </form>
         </div>
     </main>
-    <script src="/js/menu.js"></script>
+    <footter class="foot">
+        <div class="con_ct">
+            <span class="color_white bold-16">
+                +79154147366
+            </span>
+            <span  class="color_white bold-16">
+                kuzminov399@yandex.ru
+            </span>
+        </div>
+        <span  class="color_white bold-16">
+            © 2024 “Engineer's database” 
+        </span>
+    </footter>
+    <script src="{% static "/js/menu.js" %}"></script>
 </body>
 </html>

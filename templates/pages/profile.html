@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article_header.css" %}">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/profile.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/profile_header.css" %}">
     <link rel="stylesheet" href="{% static "/styles/text.css" %}">
     <link rel="stylesheet" href="{% static "/styles/footer.css" %}">
     <title>Engineer's database</title>
@@ -14,7 +14,7 @@
     <header>
         <div class="con_menu_text">
             <a class="con_logo_img_text" href="{% url 'index' %}">
-                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
+                <img src="{% static "/svg/Vector_logo.svg" %}"   alt="Engineer's database">
                 <div class="con_logo_text">
                     <span class="bold-16">
                         Engineer's database
@@ -51,14 +51,49 @@
         </div>
     </header>
     <main>
-        <form class="form_theme" method="POST" action="{% url 'knowledgebase-create' %}">
-            <div class="con_theme">
-                {{Errors}}
-                <textarea class="in_text regular-16" placeholder="Тема" name="theme"></textarea>
-                <textarea class="in_text2 regular-16" placeholder="Текст темы" name="text"></textarea>
+        <div class="con_main">
+            <div class="my_a col_white">
+                <span class="reqular-20 col_black">
+                    Шаблоны:
+                </span>
+                <div class="dis">
+                    {% for p in pattern %}
+                        <a class="link_a reqular-14" href="">
+                            {{ p.theme }}
+                        </a>
+                    {% endfor %}
+                </div>
+                <span class="reqular-20 col_black">
+                    Форумы:
+                </span>
+                <div class="dis">
+                    {% for f in forum %}
+                        <a class="link_a reqular-14" href="">
+                            {{ f.theme }}
+                        </a>
+                    {% endfor %}
+                </div>
+                <span class="reqular-20">
+                    Статьи
+                </span>
+                <div class="dis">
+                    {% for b in base %}
+                        <a class="link_a reqular-14" href="">
+                            {{ b.theme }}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
-            <button class="but">Отправить</button>
-        </form>
+            <form method="POST" action="{% url 'profile-page' request.session.user_id %}" class="con_form">
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите фамилию" name="last_name" required>
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите имя" name="first_name" required>
+                <input class="in bold-16" minlength="4" maxlength="100" placeholder="Введите отчество" name="patronymic">
+                <input class="in bold-16" placeholder="Введите email" type="email" name="email" pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$" required>
+                <button class="but reqular-20">
+                    Изменить
+                </button>
+            </form>
+        </div>
     </main>
     <footter class="foot">
         <div class="con_ct">

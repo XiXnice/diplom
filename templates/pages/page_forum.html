@@ -4,11 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article_header.css" %}">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/page_forum.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/page_forum_header.css" %}">
     <link rel="stylesheet" href="{% static "/styles/text.css" %}">
     <link rel="stylesheet" href="{% static "/styles/footer.css" %}">
     <title>Engineer's database</title>
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous">
+</script>
 </head>
 <body>
     <header>
@@ -19,7 +24,7 @@
                     <span class="bold-16">
                         Engineer's database
                     </span>
-                    <span class="bold-16 logo_text_2">
+                    <span class="bold-16">
                         Ваш помощник в работе
                     </span>
                 </div>
@@ -51,14 +56,37 @@
         </div>
     </header>
     <main>
-        <form class="form_theme" method="POST" action="{% url 'knowledgebase-create' %}">
-            <div class="con_theme">
-                {{Errors}}
-                <textarea class="in_text regular-16" placeholder="Тема" name="theme"></textarea>
-                <textarea class="in_text2 regular-16" placeholder="Текст темы" name="text"></textarea>
+        <div class="con_main">
+            <div class="con_estimation">
+                <div class="con_theme">
+                    <span class="bold-16">
+                        {{data_forum.theme}}
+                    </span>
+                </div>
             </div>
-            <button class="but">Отправить</button>
-        </form>
+            <div class="con_forum_messeges">
+                <div class="con_messages">
+                    {% for mes in data_mes  %}
+                        <span class="fio bold-14">
+                            {% for user in data_user %}
+                                {% if user.id == mes.user_id %}
+                                    {{user.first_name}} {{user.patronymic}}
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        <span class="message regular-14">
+                            {{mes.text}}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+            <form class="con_forum" method="POST" action="">
+                <textarea class="in_to regular-20" placeholder="Введите сообщение" name="text" min></textarea>
+                <div class="con_file_but">
+                    <button class="go_to">Отправить</button>
+                </div>  
+            </form>
+        </div>
     </main>
     <footter class="foot">
         <div class="con_ct">
@@ -74,5 +102,6 @@
         </span>
     </footter>
     <script src="{% static "/js/menu.js" %}"></script>
+    <script src="{% static "/js/input-file.js" %}"></script>
 </body>
 </html>

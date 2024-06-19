@@ -80,7 +80,7 @@ class User(AbstractUser):
 
 
 class KnowledgeBase(models.Model):
-    theme = models.CharField(max_length=100, verbose_name='Тема')
+    theme = models.CharField(max_length=200, verbose_name='Тема')
     text = models.TextField(verbose_name='Текст')
     date_time_creation = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', blank=True, related_name='knowledge_bases')
@@ -95,7 +95,7 @@ class KnowledgeBase(models.Model):
 
 
 class Forum(models.Model):
-    theme = models.CharField(max_length=100, verbose_name='Тема')
+    theme = models.CharField(max_length=200, verbose_name='Тема')
     date_time_creation = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     condition = models.BooleanField(default=False, verbose_name='Опубликовано')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', blank=True, related_name='forums')
@@ -110,8 +110,8 @@ class Forum(models.Model):
 
 
 class Patterns(models.Model):
-    theme = models.CharField(max_length=100, verbose_name='Тема')
-    path_file = models.FileField(upload_to='uploads/%Y/%m/%d', verbose_name='Путь к шаблону')
+    theme = models.CharField(max_length=200, verbose_name='Тема')
+    path_file = models.FileField(upload_to='uploads/', verbose_name='Путь к шаблону')
     date_time_creation = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', blank=True, related_name='patterns')
 
@@ -126,7 +126,6 @@ class Patterns(models.Model):
 
 class MessageForum(models.Model):
     text = models.TextField(verbose_name='Текст')
-    path_file = models.FileField(upload_to='uploads/%Y/%m/%d/', verbose_name='Путь к файлу', blank=True, null=True)
     date_time_creation = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='forum_messages', blank=True)
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, verbose_name='Форум', blank=True, related_name='forum_messages')

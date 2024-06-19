@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static "/styles/auto_reg_header.css" %}">
     <link rel="stylesheet" href="{% static "/styles/autorization.css" %}">
     <link rel="stylesheet" href="{% static "/styles/text.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/footer.css" %}">
     <title>Engineer's database</title>
 </head>
 <body>
@@ -30,7 +31,7 @@
                 <a href="{% url 'forum' %}" class="menu_a bold-16">
                     Форум
                 </a>
-                <a href="" class="menu_a bold-16">
+                <a href="{% url 'pattern' %}" class="menu_a bold-16">
                     Шаблоны
                 </a>
             </div>
@@ -39,7 +40,7 @@
             <button onclick="myFunction()" class="dropbtn bold-16">Меню</button>
             <div id="myDropdown" class="dropdown-content">
                 {% if request.session.user_token %}
-                    <a href="">Профиль</a>
+                    <a href="{% url 'profile-page' request.session.user_id %}">Профиль</a>
                     <a href="{% url 'user-logout' %}">Выйти</a>
                 {% else %}
                     <a href="{% url 'user-registration-confirm' %}">Подтвердить потчу</a>
@@ -73,6 +74,19 @@
             </form>
         </div>
     </main>
+    <footter class="foot">
+        <div class="con_ct">
+            <span class="color_white bold-16">
+                +79154147366
+            </span>
+            <span  class="color_white bold-16">
+                kuzminov399@yandex.ru
+            </span>
+        </div>
+        <span  class="color_white bold-16">
+            © 2024 “Engineer's database” 
+        </span>
+    </footter>
     <script src="{% static "/js/menu.js" %}"></script>
 </body>
 </html>

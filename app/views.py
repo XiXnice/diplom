@@ -1,26 +1,16 @@
-from distutils.util import strtobool
-
 from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.request import Request
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.core.validators import URLValidator
-from django.db import IntegrityError
-from django.db.models import Q, Sum, F
 from django.http import JsonResponse
-from requests import get
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
-from ujson import loads as load_json
-from yaml import load as load_yaml, Loader
 
-from app.models import ConfirmEmailToken, User, KnowledgeBase, Forum
-from app.serializers import UserSerializer, KnowledgeBaseArticleSerializer, TokenSerializer, ForumSerializer
+from app.models import ConfirmEmailToken, User, KnowledgeBase, Forum, MessageForum, Patterns, MessagePatterns
+from app.serializers import UserSerializer, KnowledgeBaseArticleSerializer, TokenSerializer, ForumSerializer, \
+    PatternsSerializer
 from app.signals import new_user_registered
 
 
@@ -108,7 +98,7 @@ class LoginAccount(APIView):
     def get(self, request, *args, **kwargs):
         return render(request, 'pages/authorization.html')
 
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         """
                 Authenticate a user.
 
@@ -125,6 +115,8 @@ class LoginAccount(APIView):
                 if user.is_active:
                     token, _ = Token.objects.get_or_create(user=user)
                     request.session['user_token'] = token.key
+                    data_user = Token.objects.get(key=token).user_id
+                    request.session['user_id'] = data_user
                     return redirect('index')
 
             return render(request, 'pages/authorization.html', {'Status': False, 'Errors': 'Не удалось авторизовать'})
@@ -183,9 +175,9 @@ class LogoutAccount(APIView):
 
 
 class ForumView(APIView):
-    def get(self, request: Request, *args, **kwargs):
-        knowledge_base = Forum.objects.all()
-        ser = ForumSerializer(knowledge_base, many=True)
+    def get(self, request, *args, **kwargs):
+        forum = Forum.objects.all()
+        ser = ForumSerializer(forum, many=True)
         return render(request, 'pages/forum.html', {'ser': ser.data})
 
 
@@ -201,7 +193,7 @@ class ForumCreateView(APIView):
         if token is not None:
             if {'theme'}.issubset(request.data):
                 data_user = Token.objects.get(key=token).user_id
-                serializer = KnowledgeBase.objects.create(theme=request.data['theme'], user_id=data_user)
+                serializer = Forum.objects.create(theme=request.data['theme'], user_id=data_user)
                 serializer.save()
                 return redirect('forum')
             else:
@@ -211,8 +203,142 @@ class ForumCreateView(APIView):
             return render(request, 'pages/creating_forum.html',
                           {'Status': False, 'Errors': 'Вы не авторизованы'})
 
-class ForumArticleView(APIView):
-    def get(self, request: Request, *args, **kwargs):
-        knowledge_base = Forum.objects.all()
-        ser = ForumSerializer(knowledge_base, many=True)
-        return render(request, 'pages/page_forum.html', {'ser': ser.data})
+
+class ForumPageView(ListAPIView):
+    queryset = Forum.objects.all()
+    serializer_class = ForumSerializer()
+
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            try:
+                token = request.session['user_token']
+            except:
+                token = None
+            serializer = Forum.objects.filter(id=pk)
+            data_mes = MessageForum.objects.filter(forum_id=pk)
+            data_user = User.objects.all()
+            return render(request, 'pages/page_forum.html',
+                          {'data_mes': data_mes, 'data_user': data_user, 'data_forum': serializer[0]})
+        except MessageForum.DoesNotExist:
+            return render(request, 'pages/page_forum.html', {'error': status.HTTP_404_NOT_FOUND})
+
+    def post(self, request, pk,*args, **kwargs):
+        try:
+            token = request.session['user_token']
+        except:
+            token = None
+        if token is not None:
+            if {'text'}.issubset(request.data):
+                data_user = Token.objects.get(key=token).user_id
+                serializer = MessageForum.objects.create(text=request.data['text'], user_id=data_user, forum_id=pk)
+                serializer.save()
+                return redirect('forum')
+            else:
+                return render(request, 'pages/page_forum.html',
+                              {'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+        else:
+            return render(request, 'pages/page_forum.html',
+                          {'Status': False, 'Errors': 'Вы не авторизованы'})
+
+
+class ProfileView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer()
+
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            token = request.session['user_token']
+        except:
+            token = None
+        if token is not None:
+            data_user_id = Token.objects.get(key=token).user_id
+            forum = Forum.objects.filter(user_id=data_user_id)
+            pattern = Patterns.objects.filter(user_id=data_user_id)
+            base = KnowledgeBase.objects.filter(user_id=data_user_id)
+            return render(request, 'pages/profile.html', {'forum': forum, 'pattern': pattern, 'base': base})
+        else:
+            return render(request, 'pages/profile.html',
+                          {'Status': False, 'Errors': 'Вы не авторизованы'})
+
+    def post(self, request, pk, *args, **kwargs):
+        if {'last_name', 'first_name', 'patronymic', 'email'}.issubset(request.data):
+            data_user_id = Token.objects.get(key=request.session['user_token']).user_id
+            forum = Forum.objects.filter(user_id=data_user_id)
+            pattern = Patterns.objects.filter(user_id=data_user_id)
+            base = KnowledgeBase.objects.filter(user_id=data_user_id)
+            user = User.objects.get(id=pk)
+            user.last_name = request.data['last_name']
+            user.first_name = request.data['first_name']
+            user.patronymic = request.data['patronymic']
+            user.email = request.data['email']
+            user.save()
+            return render(request, 'pages/profile.html', {'forum': forum, 'pattern': pattern, 'base': base})
+        return render(request, 'pages/profile.html',
+                      {'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
+
+class PatternView(APIView):
+    def get(self, request, *args, **kwargs):
+        forum = Patterns.objects.all()
+        ser = PatternsSerializer(forum, many=True)
+        return render(request, 'pages/patterns.html', {'ser': ser.data})
+
+
+class PatternCreateView(APIView):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'pages/creating_forum.html')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            token = request.session['user_token']
+        except:
+            token = None
+        if token is not None:
+            if {'theme'}.issubset(request.data):
+                data_user = Token.objects.get(key=token).user_id
+                serializer = Forum.objects.create(theme=request.data['theme'], user_id=data_user)
+                serializer.save()
+                return redirect('forum')
+            else:
+                return render(request, 'pages/creating_forum.html',
+                              {'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+        else:
+            return render(request, 'pages/creating_forum.html',
+                          {'Status': False, 'Errors': 'Вы не авторизованы'})
+
+
+class PatternPageView(ListAPIView):
+    queryset = Forum.objects.all()
+    serializer_class = ForumSerializer()
+
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            try:
+                token = request.session['user_token']
+            except:
+                token = None
+            serializer = Forum.objects.filter(id=pk)
+            data_mes = MessageForum.objects.filter(forum_id=pk)
+            data_user = User.objects.all()
+            return render(request, 'pages/page_forum.html',
+                          {'data_mes': data_mes, 'data_user': data_user, 'data_forum': serializer[0]})
+        except MessageForum.DoesNotExist:
+            return render(request, 'pages/page_forum.html', {'error': status.HTTP_404_NOT_FOUND})
+
+    def post(self, request, pk,*args, **kwargs):
+        try:
+            token = request.session['user_token']
+        except:
+            token = None
+        if token is not None:
+            if {'text'}.issubset(request.data):
+                data_user = Token.objects.get(key=token).user_id
+                serializer = MessageForum.objects.create(text=request.data['text'], user_id=data_user, forum_id=pk)
+                serializer.save()
+                return redirect('forum')
+            else:
+                return render(request, 'pages/page_forum.html',
+                              {'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+        else:
+            return render(request, 'pages/page_forum.html',
+                          {'Status': False, 'Errors': 'Вы не авторизованы'})

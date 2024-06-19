@@ -1,12 +1,16 @@
 body{
     padding: 0px;
     margin: 0px;
+    display: flex;
+    flex-direction: column;
 }
+
 main{
     background-image: url('../images/dan-meyers-vouoK_daWL8-unsplash.jpg');
     background-size: 1920px 1080px;
     background-repeat: no-repeat;
 }
+
 .con_form{
     display: flex;
     flex-direction: column;

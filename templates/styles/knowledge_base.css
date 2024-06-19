@@ -1,6 +1,8 @@
 body{
     padding: 0px;
-    margin: 0px;    
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
 }
 
 main{
@@ -101,6 +103,7 @@ main{
 
 .con_theme{
     display: flex;
+    min-width: 1300px;
     flex-direction: column;
     gap: 30px;
 }

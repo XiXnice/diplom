@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article_header.css" %}">
-    <link rel="stylesheet" href="{% static "/styles/creating_knowledge_base_article.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/forum.css" %}">
+    <link rel="stylesheet" href="{% static "/styles/forum_header.css" %}">
     <link rel="stylesheet" href="{% static "/styles/text.css" %}">
     <link rel="stylesheet" href="{% static "/styles/footer.css" %}">
     <title>Engineer's database</title>
@@ -14,7 +14,7 @@
     <header>
         <div class="con_menu_text">
             <a class="con_logo_img_text" href="{% url 'index' %}">
-                <img src="{% static "/svg/Vector_logo.svg" %}" alt="Engineer's database">
+                <img src="{% static "/svg/Vector_logo.svg" %}"   alt="Engineer's database">
                 <div class="con_logo_text">
                     <span class="bold-16">
                         Engineer's database
@@ -51,14 +51,23 @@
         </div>
     </header>
     <main>
-        <form class="form_theme" method="POST" action="{% url 'knowledgebase-create' %}">
+        <div class="con_main">
             <div class="con_theme">
-                {{Errors}}
-                <textarea class="in_text regular-16" placeholder="Тема" name="theme"></textarea>
-                <textarea class="in_text2 regular-16" placeholder="Текст темы" name="text"></textarea>
+                {% for s in ser %}
+                    <div class="theme">
+                        <span class="bold-20">
+                            {{s.theme}}
+                        </span>
+                        <a class="go_to regular-16" href="{% url 'forum-page' s.id %}">
+                            Перейти
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-            <button class="but">Отправить</button>
-        </form>
+            <a class="go_to" href="{% url 'forum-create' %}">
+                Добавить шаблон
+            </a>
+        </div>
     </main>
     <footter class="foot">
         <div class="con_ct">
